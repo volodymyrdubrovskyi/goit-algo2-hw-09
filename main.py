@@ -56,7 +56,6 @@ def simulated_annealing(func, bounds, temperature=1000, cooling_rate=0.95, step_
     current_energy = func(current_solution)
     best_solution = current_solution[:]
     best_energy = current_energy
-
     while temperature > epsilon:
         new_solution = []
         for i in range(len(bounds)):
@@ -65,20 +64,15 @@ def simulated_annealing(func, bounds, temperature=1000, cooling_rate=0.95, step_
             new_solution.append(new_value)
         new_energy = func(new_solution)
         delta_energy = new_energy - current_energy
-
         if delta_energy < 0 or random.random() < math.exp(-delta_energy / temperature):
             current_solution = new_solution[:]
             current_energy = new_energy
-
             if new_energy < best_energy:
                 best_solution = new_solution[:]
                 best_energy = new_energy
-
         temperature *= cooling_rate
-
         if temperature < epsilon:
             break
-
     return best_solution, best_energy
 
 if __name__ == "__main__":
